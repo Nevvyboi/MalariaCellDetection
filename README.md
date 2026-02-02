@@ -1,72 +1,76 @@
-# 🔬 Malaria Cell Detection with CNN
+# 🔬 Malaria Cell Detection Using Convolutional Neural Networks
 
-A Convolutional Neural Network for detecting malaria-infected blood cells from microscope images.
+<div align="center">
 
-**Repository:** https://github.com/Nevvyboi/MalariaCellDetection
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
+![Accuracy](https://img.shields.io/badge/Accuracy-96.42%25-brightgreen.svg)
 
-## 📋 Table of Contents
+**St Mary's University Twickenham London**  
+**CSO7013 Machine Learning — Mid-Term Module Assessment**
 
-- [Overview](#overview)
-- [Dataset](#dataset)
-- [Installation](#installation)
-- [Project Structure](#project-structure)
-- [Usage](#usage)
-- [Results](#results)
-- [Model Architecture](#model-architecture)
-- [License](#license)
-- [References](#references)
+</div>
 
 ---
 
-## Overview
+## 📚 About This Project
 
-This project implements a CNN to classify blood cell images as either:
-- **Parasitized** (infected with malaria)
-- **Uninfected** (healthy)
+This repository contains my **Mid-Term Module Assessment** for the **Machine Learning (CSO7013)** module at **St Mary's University Twickenham London**.
+
+| | |
+|---|---|
+| **Student** | Nevin Tom |
+| **Student ID** | 2517238 |
+| **Module** | CSO7013 Machine Learning |
+| **Assessment** | Mid-Term Module Assessment |
+| **University** | St Mary's University Twickenham London |
+
+---
+
+## 🎯 Project Overview
+
+This project implements a **Convolutional Neural Network (CNN)** to detect malaria-infected blood cells from microscope images. The model classifies thin blood smear images as either:
+
+- 🦠 **Parasitized** — Infected with malaria parasites
+- ✅ **Uninfected** — Healthy cells
 
 ### Why This Matters
-Malaria kills over 600,000 people annually. Diagnosis requires trained microscopists to manually examine blood samples - a bottleneck in resource-limited areas. This CNN can assist in automated screening.
+
+Malaria causes over **600,000 deaths annually** (WHO, 2023). Diagnosis requires trained microscopists to manually examine blood samples — a significant bottleneck in resource-limited areas. This CNN achieves **96.42% accuracy** and can assist in automated screening.
 
 ---
 
-## Dataset
+## 📊 Results
 
-### Source
-**NIH Malaria Cell Images Dataset**  
-- **URL:** https://www.kaggle.com/datasets/iarunava/cell-images-for-detecting-malaria
-- **License:** Public Domain (US Government Work)
-- **Original Source:** National Institutes of Health (NIH)
+| Metric | Value |
+|--------|-------|
+| **Accuracy** | 96.42% |
+| **Precision** | 0.9560 |
+| **Recall** | 0.9749 |
+| **F1 Score** | 0.9654 |
+| **ROC-AUC** | 0.9936 |
 
-### Download Instructions
+### Baseline Comparison
 
-1. **Go to Kaggle:** https://www.kaggle.com/datasets/iarunava/cell-images-for-detecting-malaria
-2. **Download** the dataset (requires free Kaggle account)
-3. **Extract** the zip file
-4. **Place** the `cell_images` folder in the `data/` directory and rename to `cellImages`:
+| Model | Accuracy | Improvement |
+|-------|----------|-------------|
+| Logistic Regression (Baseline) | 61.96% | — |
+| **CNN** | **96.42%** | **+34.46%** |
 
-```
-MalariaCellDetection/
-├── data/
-│   └── cellImages/          ← PUT THE EXTRACTED FOLDER HERE
-│       ├── Parasitized/     ← 13,779 infected cell images
-│       └── Uninfected/      ← 13,779 healthy cell images
-```
+### Training & Evaluation Visualizations
 
-> ⚠️ **Important:** Rename the folder to `cellImages` (or update `config.py` to match your folder name)
+<div align="center">
 
-### Dataset Details
+| Training History | Confusion Matrix | ROC Curve |
+|:---:|:---:|:---:|
+| ![Training](outputs/trainingHistory.png) | ![Confusion](outputs/confusionMatrix.png) | ![ROC](outputs/rocCurve.png) |
 
-| Property | Value |
-|----------|-------|
-| Total Images | 27,558 |
-| Infected (Parasitized) | 13,779 (50%) |
-| Healthy (Uninfected) | 13,779 (50%) |
-| Image Size | ~130×130 pixels (varies) |
-| Color | RGB (3 channels) |
+</div>
 
 ---
 
-## Installation
+## 🚀 Quick Start
 
 ### 1. Clone the Repository
 
@@ -75,175 +79,123 @@ git clone https://github.com/Nevvyboi/MalariaCellDetection.git
 cd MalariaCellDetection
 ```
 
-### 2. Create Virtual Environment (Recommended)
+### 2. Set Up Environment
 
 ```bash
 # Create virtual environment
 python -m venv venv
 
 # Activate it
-# On Windows:
-venv\Scripts\activate
+venv\Scripts\activate        # Windows
+source venv/bin/activate     # Mac/Linux
 
-# On Mac/Linux:
-source venv/bin/activate
-```
-
-### 3. Install Dependencies
-
-```bash
+# Install dependencies
 pip install -r requirements.txt
 ```
 
-### 4. Download Dataset
+### 3. Download Dataset
 
-Follow the [Dataset](#dataset) instructions above.
+1. Download from: [Kaggle - Malaria Cell Images](https://www.kaggle.com/datasets/iarunava/cell-images-for-detecting-malaria)
+2. Extract and place in `data/cellImages/`:
 
-### 5. Verify Setup
+```
+data/
+└── cellImages/
+    ├── Parasitized/     ← 13,779 infected images
+    └── Uninfected/      ← 13,779 healthy images
+```
+
+### 4. Run the Model
 
 ```bash
-# Quick test (3 epochs, small subset)
+# Quick test (3 epochs, ~2 minutes)
 python run.py --quick
+
+# Full training (35 epochs)
+python run.py
+
+# Predict on random image
+python run.py --predict-random
 ```
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 MalariaCellDetection/
 │
-├── run.py                  # 🚀 Main entry point - RUN THIS
+├── run.py                  # 🚀 Main entry point
 ├── README.md               # 📖 This file
-├── requirements.txt        # 📦 Python dependencies
+├── requirements.txt        # 📦 Dependencies
 ├── LICENSE                 # ⚖️ MIT License
 │
 ├── src/                    # 📁 Source code
-│   ├── __init__.py        # Package initializer
-│   ├── config.py          # ⚙️ All settings and hyperparameters
-│   ├── dataset.py         # 📊 Data loading and preprocessing
-│   ├── model.py           # 🧠 CNN architecture
-│   ├── train.py           # 🏋️ Training loop
-│   ├── evaluate.py        # 📈 Evaluation and visualization
-│   └── baseline.py        # 📉 Baseline model for comparison
+│   ├── config.py           # ⚙️ Hyperparameters & settings
+│   ├── dataset.py          # 📊 Data loading & preprocessing
+│   ├── model.py            # 🧠 CNN architecture
+│   ├── train.py            # 🏋️ Training loop
+│   ├── evaluate.py         # 📈 Evaluation & visualization
+│   └── baseline.py         # 📉 Baseline model
 │
-├── data/                   # 📂 Dataset folder
-│   └── cellImages/        # ← Download and extract here
-│       ├── Parasitized/
-│       └── Uninfected/
+├── data/                   # 📂 Dataset (download separately)
+│   └── cellImages/
 │
 ├── models/                 # 💾 Saved model weights
-│   └── bestModel.pth      # (created during training)
+│   └── bestModel.pth
 │
-└── outputs/                # 📊 Results and visualizations
-    ├── training_history.png
-    ├── confusion_matrix.png
-    └── roc_curve.png
+└── outputs/                # 📊 Generated visualizations
+    ├── trainingHistory.png
+    ├── confusionMatrix.png
+    └── rocCurve.png
 ```
 
 ---
 
-## Usage
-
-### Quick Test (Verify Everything Works)
-
-```bash
-python run.py --quick
-```
-
-This runs 3 epochs on a small subset (~2 minutes).
-
-### Full Training
-
-```bash
-python run.py
-```
-
-This runs 35 epochs on the full dataset:
-- **GPU:** ~15-30 minutes
-- **CPU:** ~2-4 hours
-
-### Command Line Options
-
-| Option | Description | Example |
-|--------|-------------|---------|
-| `--quick` | Quick test mode (3 epochs, small subset) | `python run.py --quick` |
-| `--epochs N` | Custom number of epochs | `python run.py --epochs 50` |
-| `--batch-size N` | Custom batch size | `python run.py --batch-size 32` |
-| `--learning-rate N` | Custom learning rate | `python run.py --learning-rate 0.0005` |
-| `--evaluate-only` | Skip training, evaluate saved model | `python run.py --evaluate-only` |
-| `--skip-baseline` | Skip baseline computation | `python run.py --skip-baseline` |
-
----
-
-## Results
-
-### Expected Performance
-
-| Model | Accuracy | F1 Score |
-|-------|----------|----------|
-| Random Guessing | ~50% | ~50% |
-| Baseline (Logistic Regression) | ~72% | ~70% |
-| **CNN** | **~95%+** | **~95%+** |
-
-### Output Files
-
-After training, find these in `outputs/`:
-
-| File | Description |
-|------|-------------|
-| `training_history.png` | Loss and accuracy curves over epochs |
-| `confusion_matrix.png` | Confusion matrix showing predictions vs actual |
-| `roc_curve.png` | ROC curve with AUC score |
-
----
-
-## Model Architecture
+## 🧠 Model Architecture
 
 ```
-Input: (batch, 3, 128, 128) - RGB images resized to 128×128
-
-┌─────────────────────────────────────────┐
-│ BLOCK 1: Conv2d(3→32) + BatchNorm + ReLU │
-│          MaxPool(2×2)                    │
-│ Output: (batch, 32, 64, 64)              │
-└─────────────────────────────────────────┘
-                    │
-                    ▼
-┌─────────────────────────────────────────┐
-│ BLOCK 2: Conv2d(32→64) + BatchNorm + ReLU│
-│          MaxPool(2×2) + Dropout(0.25)    │
-│ Output: (batch, 64, 32, 32)              │
-└─────────────────────────────────────────┘
-                    │
-                    ▼
-┌─────────────────────────────────────────┐
-│ BLOCK 3: Conv2d(64→128) + BatchNorm + ReLU│
-│          MaxPool(2×2)                     │
-│ Output: (batch, 128, 16, 16)             │
-└─────────────────────────────────────────┘
-                    │
-                    ▼
-┌─────────────────────────────────────────┐
-│ BLOCK 4: Conv2d(128→256) + BatchNorm + ReLU│
-│          MaxPool(2×2) + Dropout(0.25)     │
-│ Output: (batch, 256, 8, 8)                │
-└─────────────────────────────────────────┘
-                    │
-                    ▼
-┌─────────────────────────────────────────┐
-│ FLATTEN: (batch, 16384)                  │
-└─────────────────────────────────────────┘
-                    │
-                    ▼
-┌─────────────────────────────────────────┐
-│ FC1: Linear(16384→512) + ReLU + Dropout(0.5)│
-└─────────────────────────────────────────┘
-                    │
-                    ▼
-┌─────────────────────────────────────────┐
-│ FC2: Linear(512→2) - Output scores       │
-└─────────────────────────────────────────┘
+Input: RGB Image (128×128×3)
+         │
+         ▼
+┌─────────────────────────────┐
+│  Conv Block 1 (32 filters)  │
+│  Conv → BatchNorm → ReLU    │
+│  MaxPool(2×2)               │
+└─────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────┐
+│  Conv Block 2 (64 filters)  │
+│  Conv → BatchNorm → ReLU    │
+│  MaxPool → Dropout(0.25)    │
+└─────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────┐
+│  Conv Block 3 (128 filters) │
+│  Conv → BatchNorm → ReLU    │
+│  MaxPool(2×2)               │
+└─────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────┐
+│  Conv Block 4 (256 filters) │
+│  Conv → BatchNorm → ReLU    │
+│  MaxPool → Dropout(0.25)    │
+└─────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────┐
+│  Fully Connected (512)      │
+│  ReLU → Dropout(0.5)        │
+└─────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────┐
+│  Output (2 classes)         │
+│  Parasitized / Uninfected   │
+└─────────────────────────────┘
 ```
 
 ### Hyperparameters
@@ -256,52 +208,114 @@ Input: (batch, 3, 128, 128) - RGB images resized to 128×128
 | Learning Rate | 0.001 |
 | Optimizer | Adam |
 | Loss Function | CrossEntropyLoss |
-| Conv Dropout | 0.25 |
-| FC Dropout | 0.5 |
-
-### Data Augmentation
-
-- Random Horizontal Flip (p=0.5)
-- Random Vertical Flip (p=0.5)
-- Random Rotation (±20°)
-- Color Jitter (brightness=0.2, contrast=0.2)
+| LR Scheduler | ReduceLROnPlateau |
+| Early Stopping | 7 epochs |
+| Random Seed | 42 |
 
 ---
 
-## Troubleshooting
+## 💻 Command Line Options
 
-### "Dataset not found" Error
+| Command | Description |
+|---------|-------------|
+| `python run.py` | Full training (35 epochs) |
+| `python run.py --quick` | Quick test (3 epochs, 2000 images) |
+| `python run.py --epochs 50` | Custom epochs |
+| `python run.py --evaluate-only` | Evaluate saved model |
+| `python run.py --predict "image.png"` | Predict single image |
+| `python run.py --predict-random` | Predict random test image |
 
-Ensure folder structure is:
+---
+
+## 📋 Requirements
+
+```
+torch>=2.0.0
+torchvision>=0.15.0
+numpy>=1.24.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+scikit-learn>=1.2.0
+tqdm>=4.65.0
+Pillow>=9.5.0
+```
+
+---
+
+## 📖 Dataset
+
+**NIH Malaria Cell Images Dataset**
+
+| Property | Value |
+|----------|-------|
+| Source | National Institutes of Health (NIH) |
+| Platform | [Kaggle](https://www.kaggle.com/datasets/iarunava/cell-images-for-detecting-malaria) |
+| License | Public Domain (US Government Work) |
+| Total Images | 27,558 |
+| Parasitized | 13,779 (50%) |
+| Uninfected | 13,779 (50%) |
+
+---
+
+## 🔧 Troubleshooting
+
+<details>
+<summary><b>❌ "Dataset not found" error</b></summary>
+
+Ensure the folder structure is correct:
 ```
 data/
 └── cellImages/
     ├── Parasitized/
     └── Uninfected/
 ```
+</details>
 
-### CUDA Out of Memory
+<details>
+<summary><b>❌ "3 classes detected" error</b></summary>
+
+Delete any extra folders inside `cellImages/`. Only `Parasitized` and `Uninfected` should exist.
+</details>
+
+<details>
+<summary><b>❌ CUDA out of memory</b></summary>
 
 ```bash
 python run.py --batch-size 32
 ```
+</details>
 
-### Training Too Slow
+<details>
+<summary><b>❌ Training too slow</b></summary>
 
-- Verify GPU: `torch.cuda.is_available()` should return `True`
-- Use quick mode: `python run.py --quick`
+Use quick mode for testing:
+```bash
+python run.py --quick
+```
+</details>
 
 ---
 
-## License
+## 📚 References
 
-MIT License - see [LICENSE](LICENSE) file.
+1. **Dataset:** National Library of Medicine. (2018). *Malaria Cell Images Dataset*. Kaggle. https://www.kaggle.com/datasets/iarunava/cell-images-for-detecting-malaria
+
+2. **Paper:** Rajaraman, S., et al. (2018). Pre-trained convolutional neural networks as feature extractors toward improved malaria parasite detection in thin blood smear images. *PeerJ*, 6, e4568.
+
+3. **Statistics:** World Health Organization. (2023). *World Malaria Report 2023*.
 
 ---
 
-## References
+## 📄 License
 
-- **Dataset:** [NIH Malaria Cell Images](https://www.kaggle.com/datasets/iarunava/cell-images-for-detecting-malaria) - Public Domain
-- **Paper:** Rajaraman et al. (2018). Pre-trained convolutional neural networks as feature extractors toward improved malaria parasite detection. PeerJ.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-- 
+---
+
+<div align="center">
+
+**Made with ❤️ for CSO7013 Machine Learning**
+
+St Mary's University Twickenham London | 2025
+
+</div>
