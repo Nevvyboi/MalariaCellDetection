@@ -62,13 +62,10 @@ class Dataset():
         )
         
         classNames = fullDataset.classes
-
-        print(f"✅ Loaded {len(fullDataset)} images!")
-        print(f"🔰 Classes: {classNames}")
         
         totalSize = len(fullDataset)
-        trainSize = int(self.config.trainSplitRatio * totalSize)  # FIXED
-        valSize = int(self.config.validationSplitRatio * totalSize)  # FIXED
+        trainSize = int(self.config.trainSplitRatio * totalSize) 
+        valSize = int(self.config.validationSplitRatio * totalSize)  
         testSize = totalSize - trainSize - valSize
 
         if quickMode:
@@ -88,8 +85,6 @@ class Dataset():
             [trainSize, valSize, testSize],
             generator = torch.Generator().manual_seed(self.config.reproducibilitySeed)
         )
-
-        print(f"🚂 Train: {len(trainDataset)} | 🧪 Val: {len(validationDataset)} | 🧐 Test: {len(testDataset)}")
 
         return trainDataset, validationDataset, testDataset, classNames
     

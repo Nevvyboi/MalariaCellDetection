@@ -11,9 +11,6 @@ class Baseline():
         self.config = config.Config()
     
     def computeBaseline(self, trainDataset, testDataset, classNames, maxSamples = 5000) -> dict:
-        print("\n" + "=" * 50)
-        print("COMPUTING BASELINE")
-        print("=" * 50)
         
         def extractFeatures(dataset, maxN):
             features = []
@@ -38,7 +35,7 @@ class Baseline():
         
         scaler = StandardScaler()
         xTrain = scaler.fit_transform(xTrain)
-        xTest = scaler.transform(xTest)  # FIXED: was X_test
+        xTest = scaler.transform(xTest)  
         
         print("🔄 Training Logistic Regression...")
         model = LogisticRegression(max_iter = 1000, random_state = self.config.reproducibilitySeed)

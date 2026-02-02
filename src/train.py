@@ -17,7 +17,7 @@ class Train():
         if learningRate is None:
             learningRate = self.config.learningRate
         if savePath is None:
-            savePath = os.path.join(self.config.modelsDirectory, 'bestModel.pth')
+            savePath = os.path.join(self.config.modelsDirectory, "bestModel.pth")
         if device is None:
             device = self.config.deviceSettings
 
@@ -91,7 +91,7 @@ class Train():
                     outputs = model(images)
                     loss = criterion(outputs, labels)
                     
-                    validationLoss += loss.item()  # FIXED
+                    validationLoss += loss.item()
                     _, predicted = outputs.max(1)
                     validationTotal += labels.size(0)
                     validationCorrect += predicted.eq(labels).sum().item()
@@ -107,24 +107,24 @@ class Train():
                 epochsWithoutImprovement = 0
                 
                 torch.save({
-                    'epoch': epoch,
-                    'model_state_dict': model.state_dict(),
-                    'val_acc': validationAcc,
+                    "epoch": epoch,
+                    "modelStateDict": model.state_dict(),
+                    "validateAcc": validationAcc,
                 }, savePath)
                 print(f'  ✅ New best model! Val Accuracy -> {validationAcc:.4f}')
             else:
                 epochsWithoutImprovement += 1
             
-            history['trainLoss'].append(trainingLoss)
-            history['trainAcc'].append(trainingAcc)
-            history['validationLoss'].append(validationLoss)
-            history['validationAcc'].append(validationAcc)
-            history['learningRates'].append(currentLearningRate)
+            history["trainLoss"].append(trainingLoss)
+            history["trainAcc"].append(trainingAcc)
+            history["validationLoss"].append(validationLoss)
+            history["validationAcc"].append(validationAcc)
+            history["learningRates"].append(currentLearningRate)
             
             print(f'  ⏰ Epoch {epoch+1} -> Train Loss = {trainingLoss:.4f}, '
                 f'Train Acc = {trainingAcc:.4f}, Val Acc = {validationAcc:.4f}')
             
-            if epochsWithoutImprovement >= self.config.earlyStoppingPatience:  # FIXED
+            if epochsWithoutImprovement >= self.config.earlyStoppingPatience:
                 print(f'  ⚠️ Early stopping -> no improvement for {epochsWithoutImprovement} epochs')
                 break
         
@@ -138,9 +138,9 @@ class Train():
             device = self.config.deviceSettings
             
         checkpoint = torch.load(checkPointPath, map_location = device)
-        model.load_state_dict(checkpoint['model_state_dict'])
+        model.load_state_dict(checkpoint["modelStateDict"])
             
-        print(f"⚜️ Loaded model from epoch {checkpoint['epoch']+1}")
-        print(f"🏹 Validation accuracy -> {checkpoint['val_acc']:.4f}")
+        print(f"⚜️ Loaded model from epoch {checkpoint["epoch"]+1}")
+        print(f"🏹 Validation accuracy -> {checkpoint["validateAcc"]:.4f}")
             
         return model, checkpoint

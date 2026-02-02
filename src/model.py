@@ -27,7 +27,7 @@ class MalariaCellDetection(nn.Module):
         self.bn4 = nn.BatchNorm2d(self.filters[3])
         
         self.pool = nn.MaxPool2d(kernel_size = 2, stride = 2)
-        self.dropoutConv = nn.Dropout2d(self.config.dropoutConvulational)  # FIXED: Dropout2d
+        self.dropoutConv = nn.Dropout2d(self.config.dropoutConvulational)
         self.dropoutFC = nn.Dropout(self.config.dropoutFullyConnected)
 
         self.finalConnectedInputSize = self.filters[3] * 8 * 8
