@@ -19,7 +19,7 @@
 This repository contains my **Mid-Term Module Assessment** for the **Machine Learning (CSO7013)** module at **St Mary's University Twickenham London**.
 
 | | |
-|-|-|-|
+|-|-|
 | **Student** | Nevin Tom |
 | **Student ID** | 2517238 |
 | **Module** | CSO7013 Machine Learning |
