@@ -32,8 +32,8 @@ This repository contains my **Mid-Term Module Assessment** for the **Machine Lea
 
 This project implements a **Convolutional Neural Network (CNN)** to detect malaria-infected blood cells from microscope images. The model classifies thin blood smear images as either:
 
-- 🦠 **Parasitized** — Infected with malaria parasites
-- ✅ **Uninfected** — Healthy cells
+- 🦠 **Parasitized** —> Infected with malaria parasites
+- ✅ **Uninfected** —> Healthy cells
 
 ### Why This Matters
 
